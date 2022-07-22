@@ -1,4 +1,4 @@
-package com.yummy.domain.food;
+package com.yummy.domain.ingredient.model;
 
 import com.yummy.global.model.BaseTimeEntity;
 import lombok.*;

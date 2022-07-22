@@ -1,6 +1,6 @@
-package com.yummy.domain.ingredient;
+package com.yummy.domain.ingredient.model;
 
-import com.yummy.domain.food.Food;
+import com.yummy.domain.ingredient.IngredientDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

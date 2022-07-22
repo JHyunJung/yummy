@@ -1,7 +1,7 @@
 package com.yummy.domain.ingredient.service;
 
 import com.yummy.domain.ingredient.IngredientDto;
-import com.yummy.domain.ingredient.Ingredient;
+import com.yummy.domain.ingredient.model.Ingredient;
 import com.yummy.domain.ingredient.IngredientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,13 +1,15 @@
 package com.yummy.domain.ingredient;
 
-import com.yummy.domain.food.Storage;
+import com.yummy.domain.ingredient.model.Ingredient;
+import com.yummy.domain.ingredient.model.IngredientType;
+import com.yummy.domain.ingredient.model.Storage;
+import com.yummy.domain.userstorage.UserStorageDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-
 public class IngredientDto{
 
     private String name;
