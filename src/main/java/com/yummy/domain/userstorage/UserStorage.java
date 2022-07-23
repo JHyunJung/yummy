@@ -24,11 +24,11 @@ public class UserStorage extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY)
+//    @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY)
     @Column
     Long userId;
 
-    @ManyToOne(targetEntity = Ingredient.class, fetch=FetchType.LAZY)
+//    @ManyToOne(targetEntity = Ingredient.class, fetch=FetchType.LAZY)
     @Column
     Long foodId;
 

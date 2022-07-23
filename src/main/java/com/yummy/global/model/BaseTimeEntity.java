@@ -21,10 +21,8 @@ import java.time.LocalDateTime;
 public abstract class BaseTimeEntity {
 
     @CreatedDate
-    @Column(nullable = false)
     protected LocalDateTime createDate;
 
     @LastModifiedDate
-    @Column(nullable = false)
     protected LocalDateTime modifiedDate;
 }
