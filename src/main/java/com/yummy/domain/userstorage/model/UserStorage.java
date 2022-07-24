@@ -1,8 +1,10 @@
-package com.yummy.domain.userstorage;
+package com.yummy.domain.userstorage.model;
 
 import com.yummy.domain.ingredient.model.FoodType;
 import com.yummy.domain.ingredient.model.Ingredient;
+import com.yummy.domain.ingredient.model.Storage;
 import com.yummy.domain.user.User;
+import com.yummy.domain.userstorage.UserStorageDto;
 import com.yummy.global.model.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,16 +27,24 @@ public class UserStorage extends BaseTimeEntity {
     Long id;
 
 //    @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY)
-    @Column
+    @Column(updatable = false)
     Long userId;
 
 //    @ManyToOne(targetEntity = Ingredient.class, fetch=FetchType.LAZY)
-    @Column
+    @Column(updatable = false)
     Long foodId;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(updatable = false)
     FoodType foodType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    Storage storageType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    FreshnessType freshnessType;
 
     @Column(nullable = false)
     LocalDateTime bestBeforeDate;
@@ -42,6 +52,11 @@ public class UserStorage extends BaseTimeEntity {
     @Column
     LocalDateTime deletedDate;
 
+    public void update(UserStorageDto userStorageDto){
+        this.freshnessType = userStorageDto.getFreshnessType();
+        this.bestBeforeDate = userStorageDto.getBestBeforeDate();
+        this.deletedDate = userStorageDto.getDeletedDate();
+    }
 
 
 }
