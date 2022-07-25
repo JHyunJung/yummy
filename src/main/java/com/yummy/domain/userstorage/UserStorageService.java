@@ -32,13 +32,13 @@ public class UserStorageService {
         return new UserStorageDto(userStorage);
     }
 
-    @Transactional(readOnly = true)
-    public List<UserStorageDto> getAllbyId(Long userId){
-        return userStorageRepository.findAllByUserIdAndDeletedDateIsNull(userId)
-                .stream()
-                .map(UserStorageDto::new)
-                .collect(Collectors.toList());
-    }
+//    @Transactional(readOnly = true)
+//    public List<UserStorageDto> getAllbyId(Long userId){
+//        return userStorageRepository.findAllByUserIdAndDeletedDateIsNull(userId)
+//                .stream()
+//                .map(UserStorageDto::new)
+//                .collect(Collectors.toList());
+//    }
 
     @Transactional
     public Long update(Long userId, UserStorageDto ingredientDto) {

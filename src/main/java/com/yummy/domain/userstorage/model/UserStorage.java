@@ -44,6 +44,9 @@ public class UserStorage extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    AmountType amountType;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     FreshnessType freshnessType;
 
     @Column(nullable = false)

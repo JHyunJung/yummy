@@ -12,13 +12,15 @@ import lombok.Setter;
 @Setter
 public class IngredientDto{
 
+    private Long id;
     private String name;
     private Storage storage;
     private int shelfLife;
     private IngredientType type;
 
     @Builder
-    public IngredientDto(String name, Storage storage, int shelfLife, IngredientType type) {
+    public IngredientDto(Long id, String name, Storage storage, int shelfLife, IngredientType type) {
+        this.id = id;
         this.name = name;
         this.storage = storage;
         this.shelfLife = shelfLife;
@@ -26,6 +28,7 @@ public class IngredientDto{
     }
 
     public IngredientDto(Ingredient ingredient){
+        this.id = ingredient.getId();
         this.name = ingredient.getName();
         this. storage = ingredient.getStorage();
         this.shelfLife = ingredient.getShelfLife();
@@ -34,6 +37,7 @@ public class IngredientDto{
 
     public Ingredient toEntity(){
         return Ingredient.builder()
+                .id(id)
                 .name(name)
                 .storage(storage)
                 .shelfLife(shelfLife)
