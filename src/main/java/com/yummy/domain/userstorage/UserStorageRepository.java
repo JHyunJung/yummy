@@ -13,6 +13,8 @@ public interface UserStorageRepository extends JpaRepository<UserStorage, Long> 
     Optional<UserStorage> findByUserIdAndDeletedDateNotNull(Long userId);
     List<UserStorageDto> findAllByUserIdAndDeletedDateIsNull(Long userId);
     List<UserStorageDto> findAllByUserIdAndStorageTypeAndDeletedDateIsNull(Long userId, Storage storageType);
+    List<UserStorageDto> findAllByIdIn(List<Long> idList);
+
 //    List<UserStorageDto> findAllByUserIdAndStorageTypeAndFreshnessTypeAndDeletedDateIsNull(Long userId, Storage storageType, FreshnessType freshnessType);
 
 

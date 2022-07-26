@@ -23,6 +23,12 @@ public class UserStorageService {
         return userStorageRepository.save(userStorageDto.toEntity()).getId();
     }
 
+    @Transactional
+    public List<Long> saveAll(List<UserStorageDto> userStorageDtoList){
+//        userStorageRepository.saveAll(userStorageDtoList);
+//        return
+    }
+
     @Transactional(readOnly = true)
     public UserStorageDto getById(Long userId){
         UserStorage userStorage = userStorageRepository
@@ -58,6 +64,13 @@ public class UserStorageService {
         userStorageDto.setDeletedDate(LocalDateTime.now());
 
         userStorage.update(userStorageDto);
+    }
+
+    public void deleteList(List<Long> idList){
+//        List<UserStorageDto> userStorageList = userStorageRepository.findAllByIdIn(idList);
+//
+//        userStorageList.stream()
+//                .map(userStorageDto -> userStorageDto.setDeletedDate(LocalDateTime.now()))
     }
 
 }
