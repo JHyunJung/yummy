@@ -1,13 +1,8 @@
 package com.yummy.domain.userstorage.model;
 
-import com.yummy.domain.ingredient.model.FoodType;
-import com.yummy.domain.ingredient.model.Ingredient;
 import com.yummy.domain.ingredient.model.Storage;
-import com.yummy.domain.user.User;
 import com.yummy.domain.userstorage.UserStorageDto;
 import com.yummy.global.model.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -32,11 +27,7 @@ public class UserStorage extends BaseTimeEntity {
 
 //    @ManyToOne(targetEntity = Ingredient.class, fetch=FetchType.LAZY)
     @Column(updatable = false)
-    Long foodId;
-
-    @Enumerated(EnumType.STRING)
-    @Column(updatable = false)
-    FoodType foodType;
+    Long ingredientId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -1,21 +1,34 @@
 package com.yummy.domain.ingredient.model;
 
 import com.yummy.domain.ingredient.IngredientDto;
+import com.yummy.global.model.BaseTimeEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
 @Getter
 @Entity
-public class Ingredient extends Food {
+public class Ingredient extends BaseTimeEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  Long id;
+
+    @Column(nullable = false)
+    private  String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private  Storage storage;
+
+    @Column
+    private  int shelfLife;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private IngredientType type;

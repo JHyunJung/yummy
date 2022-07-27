@@ -1,7 +1,5 @@
 package com.yummy.domain.userstorage;
 
-import com.yummy.domain.ingredient.model.FoodType;
-import com.yummy.domain.ingredient.model.Ingredient;
 import com.yummy.domain.ingredient.model.Storage;
 import com.yummy.domain.userstorage.model.AmountType;
 import com.yummy.domain.userstorage.model.FreshnessType;
@@ -20,8 +18,7 @@ import java.time.LocalDateTime;
 public class UserStorageDto {
     Long id;
     Long userId;
-    Long foodId;
-    FoodType foodType;
+    Long ingredientId;
     Storage storageType;
     AmountType amountType;
     FreshnessType freshnessType;
@@ -31,8 +28,7 @@ public class UserStorageDto {
     public UserStorageDto(UserStorage userStorage){
         this.id = userStorage.getId();
         this.userId = userStorage.getUserId();
-        this.foodId = userStorage.getFoodId();
-        this.foodType = userStorage.getFoodType();
+        this.ingredientId = userStorage.getIngredientId();
         this.storageType = userStorage.getStorageType();
         this.amountType = userStorage.getAmountType();
         this.freshnessType = userStorage.getFreshnessType();
@@ -44,8 +40,7 @@ public class UserStorageDto {
         return UserStorage.builder()
                 .id(id)
                 .userId(userId)
-                .foodId(foodId)
-                .foodType(foodType)
+                .ingredientId(ingredientId)
                 .storageType(storageType)
                 .amountType(amountType)
                 .freshnessType(freshnessType)

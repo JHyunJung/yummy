@@ -1,21 +1,30 @@
 package com.yummy.domain.user;
 
+import com.yummy.global.model.BaseTimeEntity;
 import com.yummy.global.model.Role;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+@Getter
 @Entity
-public class User{
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String name;
-    String email;
-    String picture;
-    Role role;
-
+    private Long id;
+    @Column
+    private String name;
+    @Column
+    private String email;
+    @Column
+    private String picture;
+//    @Column
+//    Role role;
 }

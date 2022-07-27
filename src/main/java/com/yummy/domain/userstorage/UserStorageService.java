@@ -23,11 +23,11 @@ public class UserStorageService {
         return userStorageRepository.save(userStorageDto.toEntity()).getId();
     }
 
-    @Transactional
-    public List<Long> saveAll(List<UserStorageDto> userStorageDtoList){
-//        userStorageRepository.saveAll(userStorageDtoList);
-//        return
-    }
+//    @Transactional
+//    public List<Long> saveAll(List<UserStorageDto> userStorageDtoList){
+////        userStorageRepository.saveAll(userStorageDtoList);
+////        return
+//    }
 
     @Transactional(readOnly = true)
     public UserStorageDto getById(Long userId){
