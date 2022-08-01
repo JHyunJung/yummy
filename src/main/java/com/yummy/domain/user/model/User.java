@@ -1,4 +1,4 @@
-package com.yummy.domain.user;
+package com.yummy.domain.user.model;
 
 import com.yummy.global.model.BaseTimeEntity;
 import com.yummy.global.model.Role;

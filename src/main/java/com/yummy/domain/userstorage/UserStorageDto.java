@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class UserStorageDto {
-    Long id;
-    Long userId;
-    Long ingredientId;
-    Storage storageType;
-    AmountType amountType;
-    FreshnessType freshnessType;
-    LocalDateTime bestBeforeDate;
-    LocalDateTime deletedDate;
+    private Long id;
+    private Long userId;
+    private Long ingredientId;
+    private Storage storageType;
+    private AmountType amountType;
+    private FreshnessType freshnessType;
+    private LocalDateTime bestBeforeDate;
+    private LocalDateTime deletedDate;
 
     public UserStorageDto(UserStorage userStorage){
         this.id = userStorage.getId();
