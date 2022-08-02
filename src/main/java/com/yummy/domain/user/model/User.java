@@ -1,5 +1,7 @@
 package com.yummy.domain.user.model;
 
+import com.yummy.domain.ingredient.IngredientDto;
+import com.yummy.domain.user.UserDto;
 import com.yummy.global.model.BaseTimeEntity;
 import com.yummy.global.model.Role;
 import lombok.AllArgsConstructor;
@@ -27,4 +29,10 @@ public class User extends BaseTimeEntity {
     private String picture;
 //    @Column
 //    Role role;
+
+    public void update(UserDto userDto){
+        this.name = userDto.getName();
+        this.email = userDto.getEmail();
+        this.picture = userDto.getPicture();
+    }
 }
