@@ -17,7 +17,7 @@ import java.util.List;
 public class IngredientRepositoryTest {
 
     @Autowired
-    IngredientRepository ingredientRepository; vg  g 
+    IngredientRepository ingredientRepository;
 
     @BeforeEach
     public void cleanup(){
@@ -68,6 +68,28 @@ public class IngredientRepositoryTest {
 
         Assertions.assertTrue(ingredient.getCreateDate().isAfter(now));
         Assertions.assertTrue(ingredient.getModifiedDate().isAfter(now));
+    }
+
+    @Test
+    public void 재료_중복등록_체크(){
+
+        //given
+        String name = "소고기";
+        Storage storage = Storage.FREEZE;
+        int shelfLife = 30;
+        IngredientType ingredientType = IngredientType.MEAT;
+        ingredientRepository.save(Ingredient.builder()
+                .name(name)
+                .storage(storage)
+                .shelfLife(shelfLife)
+                .type(ingredientType)
+                .build());
+        //when
+        boolean isDuplicated = ingredientRepository.existsByName(name);
+
+        //then
+        assertEquals(true, isDuplicated);
+
     }
 
 }

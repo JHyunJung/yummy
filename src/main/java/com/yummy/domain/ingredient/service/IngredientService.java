@@ -4,6 +4,7 @@ import com.yummy.domain.ingredient.IngredientDto;
 import com.yummy.domain.ingredient.model.Ingredient;
 import com.yummy.domain.ingredient.IngredientRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +19,16 @@ public class IngredientService {
 
     @Transactional
     public Long save(IngredientDto ingredientDto){
-        return ingredientRepository.save(ingredientDto.toEntity()).getId();
+        Ingredient ingredient = ingredientRepository.findById(ingredientDto.getId()).orElseGet(Ingredient::new);
+        ingredient.update(ingredientDto);
+        saveIfNullId(ingredient.getId(), ingredientRepository, ingredient);
+        return ingredient.getId();
+    }
+
+    private void saveIfNullId(Long id, JpaRepository repository, Object entity){
+        if(id==null){
+            repository.save(entity);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -45,6 +55,12 @@ public class IngredientService {
         ingredient.update(ingredientDto);
         return id;
     }
+
+    @Transactional(readOnly = true)
+    public Boolean isDuplicated(String name){
+        return ingredientRepository.existsByName(name);
+    }
+
 
     public void delete(Long id){
         Ingredient ingredient = ingredientRepository.findById(id)
