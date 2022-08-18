@@ -1,6 +1,8 @@
 package com.yummy.domain.userstorage.model;
 
+import com.yummy.domain.ingredient.model.Ingredient;
 import com.yummy.domain.ingredient.model.Storage;
+import com.yummy.domain.user.model.User;
 import com.yummy.domain.userstorage.UserStorageDto;
 import com.yummy.global.model.BaseTimeEntity;
 import lombok.Getter;
@@ -21,13 +23,13 @@ public class UserStorage extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-//    @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY)
-    @Column(updatable = false)
-    Long userId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    User user;
 
-//    @ManyToOne(targetEntity = Ingredient.class, fetch=FetchType.LAZY)
-    @Column(updatable = false)
-    Long ingredientId;
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "ingredient_id")
+    Ingredient ingredient;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

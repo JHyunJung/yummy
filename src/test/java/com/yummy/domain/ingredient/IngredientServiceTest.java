@@ -1,113 +1,142 @@
 package com.yummy.domain.ingredient;
 
-import com.yummy.domain.ingredient.model.Ingredient;
 import com.yummy.domain.ingredient.model.IngredientType;
 import com.yummy.domain.ingredient.model.Storage;
 import com.yummy.domain.ingredient.service.IngredientService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@DisplayName("Describe: IngredientService Class")
 public class IngredientServiceTest {
 
     @Autowired
-    IngredientService ingredientService;
+    private IngredientService ingredientService;
     @Autowired
-    IngredientRepository ingredientRepository;
+    private IngredientRepository ingredientRepository;
 
-    @BeforeEach
-    public void cleanup() {
-        ingredientRepository.deleteAll();
+    final String name = "사과";
+    final Storage storage = Storage.COLD;
+    final int shelfLife = 30;
+    final IngredientType type = IngredientType.FRUIT;
+
+    @Nested
+    @DisplayName("Describe: Save Method")
+    class Describe_save {
+
+        @BeforeEach
+        void prepare() {
+            ingredientRepository.deleteAll();
+        }
+
+        @Nested
+        @DisplayName("Context: with a ingredientDto")
+        class Context_with_ingredientDto {
+            final IngredientDto givenDto = IngredientDto.builder()
+                    .name(name)
+                    .storage(storage)
+                    .shelfLife(shelfLife)
+                    .type(type)
+                    .build();
+
+            @Test
+            @DisplayName("It saves a dto and return Long Id")
+            void it_saves_dto_and_returns_long_id() {
+                assertNull(givenDto.getId(),
+                        "저장되지 않은 객체는 아이디가 null이다.");
+
+                final Long id = ingredientService.save(givenDto);
+                final IngredientDto foundDto = ingredientService.getById(id);
+                assertEquals(id, foundDto.getId());
+            }
+        }
     }
 
-    @Test
-    public void 재료저장() {
-        //given
-        String name = "소고기";
-        Storage storage = Storage.FREEZE;
-        int shelfLife = 30;
-        IngredientType ingredientType = IngredientType.MEAT;
+    @Nested
+    @DisplayName("Describe: getById Method")
+    class Describe_getById {
+        @BeforeEach
+        void prepare() {
+            ingredientRepository.deleteAll();
+        }
 
-        IngredientDto ingredientDto = IngredientDto.builder()
-                .name(name)
-                .storage(storage)
-                .shelfLife(shelfLife)
-                .type(ingredientType)
-                .build();
-        //when
-        ingredientService.save(ingredientDto);
+        @Nested
+        @DisplayName("Context: with a Long id")
+        class Context_with_Long_id {
+            final IngredientDto givenDto = IngredientDto.builder()
+                    .name(name)
+                    .storage(storage)
+                    .shelfLife(shelfLife)
+                    .type(type)
+                    .build();
 
-        List<Ingredient> ingredientList = ingredientRepository.findAll();
-        //then
-        Ingredient ingredient = ingredientList.get(0);
-        assertEquals(ingredient.getName(), name);
-        assertEquals(ingredient.getShelfLife(), shelfLife);
-        assertEquals(ingredient.getStorage(), storage);
+            @Test
+            @DisplayName("It find a ingredient by id and return dto")
+            void it_find_ingredient_by_id_return_dto() {
+
+                final Long savedId = ingredientService.save(givenDto);
+                IngredientDto foundDto = ingredientService.getById(savedId);
+
+                assertEquals(foundDto.getName(), givenDto.getName());
+            }
+
+            @Test
+            @DisplayName("It can't find a ingredient by id and throw IllegalArgumentException")
+            void it_cannot_find_ingredient_by_id_throw_exception() {
+
+                final Long foundId = 100L;
+                Throwable exception = assertThrows(RuntimeException.class, () -> {
+                    ingredientService.getById(foundId);
+                });
+                assertEquals("찾는 재료가 없습니다. id=" + foundId, exception.getMessage());
+                assertThrows(IllegalArgumentException.class, () -> ingredientService.getById(foundId));
+            }
+        }
     }
 
-    @Test
-    public void 재료찾기_아이디(){
-        //given
-        String name = "소고기";
-        Storage storage = Storage.FREEZE;
-        int shelfLife = 30;
-        IngredientType ingredientType = IngredientType.MEAT;
+    @Nested
+    @DisplayName("Describe: getAll Method")
+    class Describe_getAll{
+        @BeforeEach
+        void prepare() {
+            ingredientRepository.deleteAll();
+        }
 
-        IngredientDto ingredientDto = IngredientDto.builder()
-                .name(name)
-                .storage(storage)
-                .shelfLife(shelfLife)
-                .type(ingredientType)
-                .build();
-        //when
-        Long id = ingredientService.save(ingredientDto);
-        IngredientDto ingredient = ingredientService.getById(id);
-        //then
+        @Nested
+        @DisplayName("Context: with void")
+        class Context_with_Void {
+            final IngredientDto givenDto1 = IngredientDto.builder()
+                    .name(name)
+                    .storage(storage)
+                    .shelfLife(shelfLife)
+                    .type(type)
+                    .build();
 
-        assertEquals(ingredient.getId(), id);
-        assertEquals(ingredient.getName(), name);
-        assertEquals(ingredient.getShelfLife(), shelfLife);
-        assertEquals(ingredient.getStorage(), storage);
+            final IngredientDto givenDto2 = IngredientDto.builder()
+                    .name(name)
+                    .storage(storage)
+                    .shelfLife(shelfLife)
+                    .type(type)
+                    .build();
+
+            @Test
+            @DisplayName("It find a ingredient by id and return dto")
+            void it_find_ingredient_by_id_return_dto() {
+
+                final Long savedId1 = ingredientService.save(givenDto1);
+                final Long savedId2 = ingredientService.save(givenDto2);
+                List<IngredientDto> findList = ingredientService.getAll();
+
+                assertEquals(findList.size(), 2);
+            }
+        }
     }
-
-    @Test
-    public void 재료_업데이트(){
-        //given
-        String asName = "소고기";
-        Storage asStorage = Storage.FREEZE;
-        int asShelfLife = 30;
-        IngredientType asIngredientType = IngredientType.MEAT;
-
-        String toName = "양고기";
-        Storage toStorage = Storage.COLD;
-        int toShelfLife = 60;
-
-        IngredientDto ingredientDto = IngredientDto.builder()
-                .name(asName)
-                .storage(asStorage)
-                .shelfLife(asShelfLife)
-                .type(asIngredientType)
-                .build();
-        //when
-        Long id = ingredientService.save(ingredientDto);
-        IngredientDto updateDto = IngredientDto.builder()
-                .name(toName)
-                .storage(toStorage)
-                .shelfLife(toShelfLife)
-                .build();
-        ingredientService.update(id, updateDto);
-        //then
-        IngredientDto updatedDto = ingredientService.getById(id);
-
-        assertEquals(updatedDto.getName(), toName);
-        assertEquals(updatedDto.getShelfLife(), toShelfLife);
-        assertEquals(updatedDto.getStorage(), toStorage);
-    }
-
 }

@@ -18,6 +18,7 @@ public class Ingredient extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "INGREDIENT_ID")
     private  Long id;
 
     @Column(nullable = false)
@@ -25,7 +26,7 @@ public class Ingredient extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private  Storage storage;
+    private Storage storage;
 
     @Column
     private  int shelfLife;

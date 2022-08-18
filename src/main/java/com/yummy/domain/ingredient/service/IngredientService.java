@@ -4,7 +4,6 @@ import com.yummy.domain.ingredient.IngredientDto;
 import com.yummy.domain.ingredient.model.Ingredient;
 import com.yummy.domain.ingredient.IngredientRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,21 +17,12 @@ public class IngredientService {
     private final IngredientRepository ingredientRepository;
 
     @Transactional
-    public Long save(IngredientDto ingredientDto){
-        Ingredient ingredient = ingredientRepository.findById(ingredientDto.getId()).orElseGet(Ingredient::new);
-        ingredient.update(ingredientDto);
-        saveIfNullId(ingredient.getId(), ingredientRepository, ingredient);
-        return ingredient.getId();
-    }
-
-    private void saveIfNullId(Long id, JpaRepository repository, Object entity){
-        if(id==null){
-            repository.save(entity);
-        }
+    public Long save(IngredientDto ingredientDto) {
+        return ingredientRepository.save(ingredientDto.toEntity()).getId();
     }
 
     @Transactional(readOnly = true)
-    public IngredientDto getById(Long id){
+    public IngredientDto getById(Long id) {
         Ingredient ingredient = ingredientRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("찾는 재료가 없습니다. id=" + id));
@@ -41,7 +31,7 @@ public class IngredientService {
     }
 
     @Transactional(readOnly = true)
-    public List<IngredientDto> getAll(){
+    public List<IngredientDto> getAll() {
         return ingredientRepository.findAll().stream()
                 .map(IngredientDto::new)
                 .collect(Collectors.toList());
@@ -50,19 +40,19 @@ public class IngredientService {
     @Transactional
     public Long update(Long id, IngredientDto ingredientDto) {
         Ingredient ingredient = ingredientRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("찾는 재료가 없습니다. id=" + id));
+                .orElseThrow(() -> new IllegalArgumentException("찾는 재료가 없습니다. id=" + id));
 
         ingredient.update(ingredientDto);
         return id;
     }
 
     @Transactional(readOnly = true)
-    public Boolean isDuplicated(String name){
+    public Boolean isDuplicated(String name) {
         return ingredientRepository.existsByName(name);
     }
 
 
-    public void delete(Long id){
+    public void delete(Long id) {
         Ingredient ingredient = ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("찾는 재료가 없습니다. id=" + id));
 

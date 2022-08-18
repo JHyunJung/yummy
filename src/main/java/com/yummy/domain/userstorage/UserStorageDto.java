@@ -27,8 +27,8 @@ public class UserStorageDto {
 
     public UserStorageDto(UserStorage userStorage){
         this.id = userStorage.getId();
-        this.userId = userStorage.getUserId();
-        this.ingredientId = userStorage.getIngredientId();
+//        this.user = userStorage.getUser();
+//        this.ingredientId = userStorage.getIngredient();
         this.storageType = userStorage.getStorageType();
         this.amountType = userStorage.getAmountType();
         this.freshnessType = userStorage.getFreshnessType();
@@ -39,8 +39,8 @@ public class UserStorageDto {
     public UserStorage toEntity(){
         return UserStorage.builder()
                 .id(id)
-                .userId(userId)
-                .ingredientId(ingredientId)
+//                .userId(userId)
+//                .ingredientId(ingredientId)
                 .storageType(storageType)
                 .amountType(amountType)
                 .freshnessType(freshnessType)
